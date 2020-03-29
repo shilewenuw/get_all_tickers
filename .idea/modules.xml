@@ -2,7 +2,7 @@
 <project version="4">
   <component name="ProjectModuleManager">
     <modules>
-      <module fileurl="file://$PROJECT_DIR$/.idea/get-all-tickers.iml" filepath="$PROJECT_DIR$/.idea/get-all-tickers.iml" />
+      <module fileurl="file://$PROJECT_DIR$/../get_all_tickers/.idea/get_all_tickers.iml" filepath="$PROJECT_DIR$/../get_all_tickers/.idea/get_all_tickers.iml" />
     </modules>
   </component>
 </project>

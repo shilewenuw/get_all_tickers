@@ -31,7 +31,15 @@ def save_tickers(NYSE=True, NASDAQ=True, AMEX=True, filename='tickers.csv'):
 
 
 if __name__ == '__main__':
+    # tickers of all exchanges
     tickers = get_tickers()
     print(tickers[:5])
 
+    # tickers from NYSE and NASDAQ only
+    tickers = get_tickers(AMEX=False)
+
+    # default filename is tickers.csv, to specify, add argument filename='yourfilename.csv'
     save_tickers()
+
+    # save tickers from NYSE and AMEX only
+    save_tickers(NASDAQ=False)
