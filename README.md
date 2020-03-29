@@ -48,4 +48,11 @@ gt.save_tickers()
 
 # save tickers from NYSE and AMEX only
 gt.save_tickers(NASDAQ=False)
+
+# get tickers from Asia
+tickers_asia = get_tickers_by_region(Region.ASIA)
+print(tickers_asia[:5])
+
+# save tickers from Europe
+save_tickers_by_region(Region.EUROPE, filename='EU_tickers.csv')
 ```
