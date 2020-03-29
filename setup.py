@@ -2,13 +2,13 @@ from distutils.core import setup
 setup(
   name = 'get_all_tickers',
   packages = ['get_all_tickers'],
-  version = '0.1',
+  version = '0.2',
   license='MIT',
   description = 'get a Python list or download all publicly traded tickers',
   author = 'Shile Wen',
   author_email = 'shilewen1@gmail.com',
   url = 'https://github.com/shilewenuw',
-  download_url = 'https://github.com/shilewenuw/get_all_tickers/archive/v_01.tar.gz',
+  download_url = 'https://github.com/shilewenuw/get_all_tickers/archive/v_02.tar.gz',
   keywords = ['PYTHON', 'STOCKS', 'CSV', 'TICKERS'],
   install_requires=[
           'pandas',
