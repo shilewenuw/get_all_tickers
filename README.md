@@ -22,22 +22,18 @@ Returns a list of tickers, set an exchange to false to exclude.
 Region.DESIRED_REGION_HERE
 ```
 Region constants include: AFRICA, EUROPE, ASIA, AUSTRALIA_SOUTH_PACIFIC, CARIBBEAN, SOUTH_AMERICA, MIDDLE_EAST, NORTH_AMERICA. Regions are used as arguments for region specific methods.
-
 ```
 get_tickers_by_region(region)
 ```
 Use a Region constant (e.g Region.EUROPE) as the argument. Returns a list of tickers in specified region.
-
 ```
 save_tickers(NYSE=True, NASDAQ=True, AMEX=True, filename='tickers.csv')
 ```
 Set any exchange to False if you don't want to include it. Saves tickers to a csv file.
-
 ```
 save_tickers_by_region(region, filename='tickers_by_region.csv')
 ```
 Use a Region constant (e.g Region.EUROPE) as the argument. Saves tickers in specified region to csv
-
 ### examples
 ```
 from get_all_tickers import get_tickers as gt
