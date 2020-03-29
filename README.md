@@ -13,16 +13,17 @@ pip install get_all_tickers
 ```
 ### examples
 ```
+from get_all_tickers import get_tickers as gt
 # tickers of all exchanges
-tickers = get_tickers()
+tickers = gt.get_tickers()
 print(tickers[:5])
 
 # tickers from NYSE and NASDAQ only
-tickers = get_tickers(AMEX=False)
+tickers = gt.get_tickers(AMEX=False)
 
 # default filename is tickers.csv, to specify, add argument filename='yourfilename.csv'
-save_tickers()
+gt.save_tickers()
 
 # save tickers from NYSE and AMEX only
-save_tickers(NASDAQ=False)
+gt.save_tickers(NASDAQ=False)
 ```
