@@ -5,6 +5,7 @@ I couldn't find any libraries to retrieve all the tickers of publicly traded sto
 ## features
 -  getting a list of tickers from chosen exchanges (all of them by default)
 -  saving a list of tickers from chosen exchanges as a CSV
+-  (planned) getting a list of tickers with different criteria (such as Market Cap, P/E)
 
 ### install
 Use the following pip command:
