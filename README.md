@@ -9,7 +9,7 @@ I couldn't find any libraries to retrieve all the tickers of publicly traded sto
 ### install
 Use the following pip command:
 ```
-pip install get_all_tickers
+pip install get-all-tickers
 ```
 ### examples
 ```
