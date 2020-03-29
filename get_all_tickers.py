@@ -5,7 +5,7 @@ NASDAQ_URL = 'https://old.nasdaq.com/screening/companies-by-name.aspx?letter=0&e
 AMEX_URL = 'https://old.nasdaq.com/screening/companies-by-name.aspx?letter=0&exchange=amex&render=download'
 
 
-# get all tickers as a CSV
+# get tickers from chosen exchanges (default all) as a list
 def get_tickers(NYSE=True, NASDAQ=True, AMEX=True):
     tickers_list = []
     if NYSE:
