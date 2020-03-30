@@ -42,6 +42,7 @@ Use a Region constant (e.g Region.EUROPE) as the argument. Saves tickers in spec
 ### examples
 ```
 from get_all_tickers import get_tickers as gt
+from get_all_tickers.get_tickers import Region
 # tickers of all exchanges
 tickers = gt.get_tickers()
 print(tickers[:5])
