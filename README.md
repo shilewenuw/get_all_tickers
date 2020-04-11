@@ -1,10 +1,11 @@
 # get-all-tickers
 
-I couldn't find any libraries to retrieve all the tickers of publicly traded stocks, so I decided to make my own library that could do this. The stock tickers are from the NYSE, NASDAQ, and AMEX.
+I couldn't find any libraries to retrieve all the tickers of publicly traded stocks, so I decided to make my own library that could do this. The stock tickers are from the NYSE, NASDAQ, and AMEX. Support has been added for global tickers. P.S. if you like my project and my other works, I am looking for a summer internship.
 
 ## features
 -  getting a list of tickers from chosen exchanges (all of them by default)
--  saving a list of tickers from chosen exchanges as a CSV
+-  getting tickers from any region of the world
+-  saving tickers to a CSV
 -  (planned) getting a list of tickers with different criteria (such as Market Cap, P/E)
 
 ### install
