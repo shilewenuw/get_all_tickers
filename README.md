@@ -17,9 +17,9 @@ pip install get-all-tickers
 ```
 get_tickers(NYSE=True, NASDAQ=True, AMEX=True)
 ```
-Returns a list of tickers, set an exchange to false to exclude.\
-
-
+Returns a list of tickers, set an exchange to false to exclude.
+  
+  
 ```
 Region.DESIRED_REGION_HERE
 ```
