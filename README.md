@@ -19,6 +19,7 @@ get_tickers(NYSE=True, NASDAQ=True, AMEX=True)
 ```
 Returns a list of tickers, set an exchange to false to exclude.
 ***
+```
 get_tickers_filtered(mktcap_min=None, mktcap_max=None)
 ```
 Returns a list of tickers with given filters (so far filters market cap only, feel free to give suggestions).
