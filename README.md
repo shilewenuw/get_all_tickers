@@ -18,7 +18,15 @@ pip install get-all-tickers
 get_tickers(NYSE=True, NASDAQ=True, AMEX=True)
 ```
 Returns a list of tickers, set an exchange to false to exclude.
-***  
+***
+get_tickers_filtered(mktcap_min=None, mktcap_max=None)
+```
+Returns a list of tickers with given filters (so far filters market cap only, feel free to give suggestions).
+Minimum and maximum market caps are set through mktcap_min and mktcap_max, respectively (numbers are in millions).
+You can have no upper bound for market cap if you leave mktcap_max as its default value, so `get_tickers_filtered(mktcap_min=200)` will
+get tickers of market caps 200 million and up. Likewise, not setting mktcap_min will get tickers with market caps from $0 to mktcap_max
+***
+
 ```
 Region.DESIRED_REGION_HERE
 ```
@@ -62,4 +70,13 @@ print(tickers_asia[:5])
 
 # save tickers from Europe
 save_tickers_by_region(Region.EUROPE, filename='EU_tickers.csv')
+
+# get tickers filtered by market cap (in millions)
+# this gets stocks of sizes between 500 million and 2 billion
+filtered_tickers = get_tickers_filtered(mktcap_min=500, mktcap_max=2000)
+print(filtered_tickers[:5])
+
+# not setting max will get stocks with $200 million market cap and up.
+filtered_tickers = get_tickers_filtered(mktcap_min=200)
+print(filtered_tickers[:5])
 ```

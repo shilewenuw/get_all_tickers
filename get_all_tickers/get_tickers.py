@@ -31,8 +31,6 @@ def get_tickers(NYSE=True, NASDAQ=True, AMEX=True):
 
 
 def get_tickers_filtered(mktcap_min=None, mktcap_max=None):
-    if mktcap_min > mktcap_max:
-        raise ValueError('Please have the mktcap_max be lower than mktcap_min')
     tickers_list = []
     for url in _URL_LIST:
         tickers_list.extend(__url2list_filtered(url, mktcap_min=mktcap_min, mktcap_max=mktcap_max))
@@ -104,4 +102,8 @@ if __name__ == '__main__':
     
     # get tickers filtered by market cap (in millions)
     filtered_tickers = get_tickers_filtered(mktcap_min=500, mktcap_max=2000)
+    print(filtered_tickers[:5])
+
+    # not setting max will get stocks with $200 million market cap and up.
+    filtered_tickers = get_tickers_filtered(mktcap_min=200)
     print(filtered_tickers[:5])
