@@ -2,9 +2,10 @@ from distutils.core import setup
 setup(
   name = 'get_all_tickers',
   packages = ['get_all_tickers'],
-  version = '0.2',
+  version = '1.0',
   license='MIT',
   description = 'get a Python list or download all publicly traded tickers',
+  long_description= 'view docs at https://github.com/shilewenuw/get_all_tickers',
   author = 'Shile Wen',
   author_email = 'shilewen1@gmail.com',
   url = 'https://github.com/shilewenuw',
