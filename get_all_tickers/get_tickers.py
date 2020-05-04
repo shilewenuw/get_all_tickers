@@ -56,7 +56,14 @@ def __url2list_filtered(url, mktcap_min=None, mktcap_max=None):
     df = pandas.read_csv(url)
     df = df.dropna(subset={'MarketCap'})
     df = df[~df['Symbol'].str.contains("\.|\^")]
-    df['MarketCap'] = df['MarketCap'].apply(lambda x: float(x[1:-1]) if 'M' in x else float(x[1:-1]) * 1000)
+    def cust_filter(mkt_cap):
+        if 'M' in mkt_cap:
+            return float(mkt_cap[1:-1])
+        elif 'B' in mkt_cap:
+            return float(mkt_cap[1:-1]) * 1000
+        else:
+            return float(mkt_cap[1:])
+    df['MarketCap'] = df['MarketCap'].apply(cust_filter)
 
     if mktcap_min is not None:
         df = df[df['MarketCap'] > mktcap_min]
@@ -104,6 +111,6 @@ if __name__ == '__main__':
     filtered_tickers = get_tickers_filtered(mktcap_min=500, mktcap_max=2000)
     print(filtered_tickers[:5])
 
-    # not setting max will get stocks with $200 million market cap and up.
-    filtered_tickers = get_tickers_filtered(mktcap_min=200)
-    print(filtered_tickers[:5])
+    # not setting max will get stocks with $2000 million market cap and up.
+    filtered_tickers = get_tickers_filtered(mktcap_min=2000)
+    print(filtered_tickers)
