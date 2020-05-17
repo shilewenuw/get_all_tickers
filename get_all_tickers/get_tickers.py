@@ -62,7 +62,7 @@ def __url2list_filtered(url, mktcap_min=None, mktcap_max=None):
         elif 'B' in mkt_cap:
             return float(mkt_cap[1:-1]) * 1000
         else:
-            return float(mkt_cap[1:])
+            return float(mkt_cap[1:]) / 1e6
     df['MarketCap'] = df['MarketCap'].apply(cust_filter)
 
     if mktcap_min is not None:
@@ -106,7 +106,7 @@ if __name__ == '__main__':
 
     # save tickers from Europe
     save_tickers_by_region(Region.EUROPE, filename='EU_tickers.csv')
-    
+
     # get tickers filtered by market cap (in millions)
     filtered_tickers = get_tickers_filtered(mktcap_min=500, mktcap_max=2000)
     print(filtered_tickers[:5])
