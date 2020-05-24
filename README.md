@@ -2,10 +2,11 @@
 
 I couldn't find any libraries to retrieve all the tickers of publicly traded stocks, so I decided to make my own library that could do this. The stock tickers are from the NYSE, NASDAQ, and AMEX. Support has been added for global tickers. 
 ## features
--  getting a list of tickers from chosen exchanges (all of them by default)
+-  getting a list of tickers from chosen US exchanges (all of them by default)
+-  getting a list of tickers filtered by market caps and sectors
+-  getting the top n biggest tickers, optionally by a given sector
 -  getting tickers from any region of the world
 -  saving tickers to a CSV
--  (planned) getting a list of tickers with different criteria (such as Market Cap, P/E)
 
 ### install
 Use the following pip command:
