@@ -1,16 +1,44 @@
-import pandas
+import pandas as pd
 from enum import Enum
+import io
+import requests
 
-# urls of CSV, from which the tickers will be extracted
-_NYSE_URL = 'https://old.nasdaq.com/screening/companies-by-name.aspx?letter=0&exchange=nyse&render=download'
-_NASDAQ_URL = 'https://old.nasdaq.com/screening/companies-by-name.aspx?letter=0&exchange=nasdaq&render=download'
-_AMEX_URL = 'https://old.nasdaq.com/screening/companies-by-name.aspx?letter=0&exchange=amex&render=download'
-_URL_LIST = [_NYSE_URL, _NASDAQ_URL, _AMEX_URL]
+_EXCHANGE_LIST = ['nyse', 'nasdaq', 'amex']
 
 _SECTORS_LIST = set(['Consumer Non-Durables', 'Capital Goods', 'Health Care',
        'Energy', 'Technology', 'Basic Industries', 'Finance',
        'Consumer Services', 'Public Utilities', 'Miscellaneous',
        'Consumer Durables', 'Transportation'])
+
+
+# headers and params used to bypass NASDAQ's anti-scraping mechanism in function __exchange2df
+headers = {
+    'authority': 'old.nasdaq.com',
+    'upgrade-insecure-requests': '1',
+    'user-agent': 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/83.0.4103.116 Safari/537.36',
+    'accept': 'text/html,application/xhtml+xml,application/xml;q=0.9,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.9',
+    'sec-fetch-site': 'cross-site',
+    'sec-fetch-mode': 'navigate',
+    'sec-fetch-user': '?1',
+    'sec-fetch-dest': 'document',
+    'referer': 'https://github.com/shilewenuw/get_all_tickers/issues/2',
+    'accept-language': 'en-US,en;q=0.9',
+    'cookie': 'AKA_A2=A; NSC_W.TJUFEFGFOEFS.OBTEBR.443=ffffffffc3a0f70e45525d5f4f58455e445a4a42378b',
+}
+
+def params(exchange):
+    return (
+        ('letter', '0'),
+        ('exchange', exchange),
+        ('render', 'download'),
+    )
+
+def params_region(region):
+    return (
+        ('letter', '0'),
+        ('region', region),
+        ('render', 'download'),
+    )
 
 # I know it's weird to have Sectors as constants, yet the Regions as enums, but
 # it makes the most sense to me
@@ -42,26 +70,26 @@ class SectorConstants:
 def get_tickers(NYSE=True, NASDAQ=True, AMEX=True):
     tickers_list = []
     if NYSE:
-        tickers_list.extend(__url2list(_NYSE_URL))
+        tickers_list.extend(__exchange2list('nyse'))
     if NASDAQ:
-        tickers_list.extend(__url2list(_NASDAQ_URL))
+        tickers_list.extend(__exchange2list('nasdaq'))
     if AMEX:
-        tickers_list.extend(__url2list(_AMEX_URL))
+        tickers_list.extend(__exchange2list('amex'))
     return tickers_list
 
 
 def get_tickers_filtered(mktcap_min=None, mktcap_max=None, sectors=None):
     tickers_list = []
-    for url in _URL_LIST:
-        tickers_list.extend(__url2list_filtered(url, mktcap_min=mktcap_min, mktcap_max=mktcap_max, sectors=sectors))
+    for exchange in _EXCHANGE_LIST:
+        tickers_list.extend(__exchange2list_filtered(exchange, mktcap_min=mktcap_min, mktcap_max=mktcap_max, sectors=sectors))
     return tickers_list
 
 
 def get_biggest_n_tickers(top_n, sectors=None):
-    df = pandas.DataFrame()
-    for url in _URL_LIST:
-        temp = pandas.read_csv(url)
-        df = pandas.concat([df, temp])
+    df = pd.DataFrame()
+    for exchange in _EXCHANGE_LIST:
+        temp = __exchange2df(exchange)
+        df = pd.concat([df, temp])
         
     df = df.dropna(subset={'MarketCap'})
     df = df[~df['Symbol'].str.contains("\.|\^")]
@@ -92,22 +120,29 @@ def get_biggest_n_tickers(top_n, sectors=None):
 
 def get_tickers_by_region(region):
     if region in Region:
-        return __url2list(f'https://old.nasdaq.com/screening/'
-                          f'companies-by-region.aspx?region={region.value}&render=download')
+        response = requests.get('https://old.nasdaq.com/screening/companies-by-name.aspx', headers=headers,
+                                params=params_region(region))
+        data = io.StringIO(response.text)
+        df = pd.read_csv(data, sep=",")
+        return __exchange2list(df)
     else:
         raise ValueError('Please enter a valid region (use a Region.REGION as the argument, e.g. Region.AFRICA)')
 
+def __exchange2df(exchange):
+    response = requests.get('https://old.nasdaq.com/screening/companies-by-name.aspx', headers=headers, params=params(exchange))
+    data = io.StringIO(response.text)
+    df = pd.read_csv(data, sep=",")
+    return df
 
-
-def __url2list(url):
-    df = pandas.read_csv(url)
+def __exchange2list(exchange):
+    df = __exchange2df(exchange)
     # removes weird tickers
     df_filtered = df[~df['Symbol'].str.contains("\.|\^")]
     return df_filtered['Symbol'].tolist()
 
 # market caps are in millions
-def __url2list_filtered(url, mktcap_min=None, mktcap_max=None, sectors=None):
-    df = pandas.read_csv(url)
+def __exchange2list_filtered(exchange, mktcap_min=None, mktcap_max=None, sectors=None):
+    df = __exchange2df(exchange)
     df = df.dropna(subset={'MarketCap'})
     df = df[~df['Symbol'].str.contains("\.|\^")]
 
@@ -137,13 +172,12 @@ def __url2list_filtered(url, mktcap_min=None, mktcap_max=None, sectors=None):
 # save the tickers to a CSV
 def save_tickers(NYSE=True, NASDAQ=True, AMEX=True, filename='tickers.csv'):
     tickers2save = get_tickers(NYSE, NASDAQ, AMEX)
-    df = pandas.DataFrame(tickers2save)
+    df = pd.DataFrame(tickers2save)
     df.to_csv(filename, header=False, index=False)
-
 
 def save_tickers_by_region(region, filename='tickers_by_region.csv'):
     tickers2save = get_tickers_by_region(region)
-    df = pandas.DataFrame(tickers2save)
+    df = pd.DataFrame(tickers2save)
     df.to_csv(filename, header=False, index=False)
 
 
