@@ -1,6 +1,7 @@
 # get-all-tickers
 
-I couldn't find any libraries to retrieve all the tickers of publicly traded stocks, so I decided to make my own library that could do this. The stock tickers are from the NYSE, NASDAQ, and AMEX. Support has been added for global tickers. 
+I couldn't find any libraries to retrieve all the tickers of publicly traded stocks, so I decided to make my own library that could do this. The stock tickers are from the NYSE, NASDAQ, and AMEX. Support has been added for global tickers.  
+Note: NASDAQ implemented anti-scraping features, requiring version 1.7 to incorporate changes to get around the anti-scraping mechanism, but as a result, get-all-tickers no longer works in Google Colab.
 ## features
 -  getting a list of tickers from chosen US exchanges (all of them by default)
 -  getting a list of tickers filtered by market caps and sectors
