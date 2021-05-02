@@ -26,20 +26,16 @@ headers = {
 
 def params(exchange):
     return (
-        ('tableonly', 'true'),
-        ('limit', '25'),
-        ('offset', '0'),
-        ('download', 'true'),
         ('letter', '0'),
         ('exchange', exchange),
-        ('render', 'download'),
+        ('download', 'true'),
     )
 
 def params_region(region):
     return (
         ('letter', '0'),
         ('region', region),
-        ('render', 'download'),
+        ('download', 'true'),
     )
 
 # I know it's weird to have Sectors as constants, yet the Regions as enums, but
