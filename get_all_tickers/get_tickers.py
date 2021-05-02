@@ -26,17 +26,14 @@ headers = {
 
 def params(exchange):
     return (
+        ('tableonly', 'true'),
+        ('limit', '25'),
+        ('offset', '0'),
+        ('download', 'true'),
         ('letter', '0'),
         ('exchange', exchange),
         ('render', 'download'),
     )
-
-params = (
-    ('tableonly', 'true'),
-    ('limit', '25'),
-    ('offset', '0'),
-    ('download', 'true'),
-)
 
 def params_region(region):
     return (
@@ -134,10 +131,7 @@ def get_tickers_by_region(region):
         raise ValueError('Please enter a valid region (use a Region.REGION as the argument, e.g. Region.AFRICA)')
 
 def __exchange2df(exchange):
-    # response = requests.get('https://old.nasdaq.com/screening/companies-by-name.aspx', headers=headers, params=params(exchange))
-    # data = io.StringIO(response.text)
-    # df = pd.read_csv(data, sep=",")
-    r = requests.get('https://api.nasdaq.com/api/screener/stocks', headers=headers, params=params)
+    r = requests.get('https://api.nasdaq.com/api/screener/stocks', headers=headers, params=params(exchange))
     data = r.json()['data']
     df = pd.DataFrame(data['rows'], columns=data['headers'])
     return df
@@ -151,7 +145,6 @@ def __exchange2list(exchange):
 # market caps are in millions
 def __exchange2list_filtered(exchange, mktcap_min=None, mktcap_max=None, sectors=None):
     df = __exchange2df(exchange)
-    # df = df.dropna(subset={'MarketCap'})
     df = df.dropna(subset={'marketCap'})
     df = df[~df['symbol'].str.contains("\.|\^")]
 
