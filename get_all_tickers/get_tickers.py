@@ -15,7 +15,7 @@ _SECTORS_LIST = set(['Consumer Non-Durables', 'Capital Goods', 'Health Care',
 headers = {
     'authority': 'api.nasdaq.com',
     'accept': 'application/json, text/plain, */*',
-    'user-agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/87.0.4280.141 Safari/537.36',
+    'user-agent': 'Mozilla/5.0 (X11; Linux x86_64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/83.0.4103.116 Safari/537.36',
     'origin': 'https://www.nasdaq.com',
     'sec-fetch-site': 'same-site',
     'sec-fetch-mode': 'cors',
