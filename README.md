@@ -1,5 +1,3 @@
-# LOOKING FOR A NEW MAINTAINER - IF INTERESTED, PLEASE CREATE AN ISSUE STATING THAT YOU WANT TO BECOME A MAINTAINER
-
 # get-all-tickers
 
 I couldn't find any libraries to retrieve all the tickers of publicly traded stocks, so I decided to make my own library that could do this. The stock tickers are from the NYSE, NASDAQ, and AMEX. Support has been added for global tickers.  
